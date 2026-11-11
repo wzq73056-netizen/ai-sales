@@ -1,0 +1,21 @@
+ai-sales
+========
+
+本仓库的业务代码以 MIT 许可证发布（见 LICENSE）。
+
+本仓库同时包含以下两个开源项目的修改版本，其原始许可证保留在 LICENSES 目录：
+
+1. gin-vue-admin
+   https://github.com/flipped-aurora/gin-vue-admin
+   Copyright 2021 flipped-aurora
+   Apache License 2.0 —— 见 LICENSES/Apache-2.0.txt
+   位置：backend/
+
+2. soybean-admin
+   https://github.com/soybeanjs/soybean-admin
+   Copyright 2021 Soybean
+   MIT License —— 见 LICENSES/MIT-soybean-admin.txt
+   位置：frontend/
+
+上述两个项目的版权声明与本声明一并保留。分发本仓库或其衍生物时，
+请同时保留 LICENSES 目录下的许可证文件。

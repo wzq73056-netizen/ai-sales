@@ -1,0 +1,33 @@
+# ---------- 依赖与构建产物 ----------
+node_modules/
+dist/
+dist-ssr/
+bin/
+vendor/
+*.exe
+*.exe~
+*.dll
+*.so
+*.bak
+
+# ---------- 本机配置与密钥 ----------
+server/config.yaml
+.env.local
+data/
+*.log
+logs/
+upload/
+uploads/
+
+# ---------- 运行时数据 ----------
+heartbeat*.txt
+*.pid
+*.flag
+
+# ---------- 系统 ----------
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+db.json
+llm.json
