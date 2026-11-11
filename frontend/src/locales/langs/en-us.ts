@@ -94,11 +94,11 @@ const local: App.I18n.Schema = {
         apply: 'Apply',
         applySuccess: 'Preset applied successfully',
         default: {
-          name: 'Default Preset',
+          name: 'Standard',
           desc: 'Default theme preset with balanced settings'
         },
         dark: {
-          name: 'Dark Preset',
+          name: 'Night',
           desc: 'Dark theme preset for night time usage'
         },
         compact: {
@@ -106,8 +106,8 @@ const local: App.I18n.Schema = {
           desc: 'Compact layout preset for small screens'
         },
         azir: {
-          name: "Azir's Preset",
-          desc: 'It is a cold and elegant preset that Azir likes'
+          name: 'Morandi',
+          desc: 'Low-saturation Morandi palette, cool and understated'
         }
       }
     },
@@ -366,7 +366,7 @@ const local: App.I18n.Schema = {
     },
     about: {
       title: 'About',
-      introduction: `SoybeanAdmin is an elegant and powerful admin template, based on the latest front-end technology stack, including Vue3, Vite7, TypeScript, Pinia and UnoCSS. It has built-in rich theme configuration and components, strict code specifications, and an automated file routing system. In addition, it also uses the online mock data solution based on ApiFox. SoybeanAdmin provides you with a one-stop admin solution, no additional configuration, and out of the box. It is also a best practice for learning cutting-edge technologies quickly.`,
+      introduction: `AI Sales is a self-hosted lead-generation tool: it collects leads from Douyin, Xiaohongshu and WeChat, replies with an LLM, and hands qualified conversations to a human. Frontend on soybean-admin, backend on gin-vue-admin, data stays local.`,
       projectInfo: {
         title: 'Project Info',
         version: 'Version',

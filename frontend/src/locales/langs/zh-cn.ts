@@ -94,11 +94,11 @@ const local: App.I18n.Schema = {
         apply: '应用',
         applySuccess: '预设应用成功',
         default: {
-          name: '默认预设',
-          desc: 'Soybean 默认主题预设'
+          name: '标准',
+          desc: '日常使用的默认配色与布局'
         },
         dark: {
-          name: '暗色预设',
+          name: '夜间',
           desc: '适用于夜间使用的暗色主题预设'
         },
         compact: {
@@ -106,8 +106,8 @@ const local: App.I18n.Schema = {
           desc: '适用于小屏幕的紧凑布局预设'
         },
         azir: {
-          name: 'Azir的预设',
-          desc: '是 Azir 比较喜欢的莫兰迪色系冷淡风'
+          name: '莫兰迪',
+          desc: '低饱和莫兰迪色系，偏冷淡风'
         }
       }
     },
@@ -363,7 +363,7 @@ const local: App.I18n.Schema = {
     },
     about: {
       title: '关于',
-      introduction: `SoybeanAdmin 是一个优雅且功能强大的后台管理模板，基于最新的前端技术栈，包括 Vue3, Vite7, TypeScript, Pinia 和 UnoCSS。它内置了丰富的主题配置和组件，代码规范严谨，实现了自动化的文件路由系统。此外，它还采用了基于 ApiFox 的在线Mock数据方案。SoybeanAdmin 为您提供了一站式的后台管理解决方案，无需额外配置，开箱即用。同样是一个快速学习前沿技术的最佳实践。`,
+      introduction: `AI 获客系统是一个跑在本机的获客工具：从抖音、小红书、微信收集线索，用大模型自动接待和筛选，人工跟进成交。前端基于 soybean-admin，后端基于 gin-vue-admin，数据全部保存在本地。`,
       projectInfo: {
         title: '项目信息',
         version: '版本',
