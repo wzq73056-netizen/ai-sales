@@ -49,7 +49,7 @@ if (Test-Path $cfg) {
     $safe = Get-Content $cfg -Raw -Encoding UTF8
     $safe = $safe -replace '(password:\s*)\S+', '$1<YOUR_DB_PASSWORD>'
     $safe = $safe -replace '(api-key:\s*)\S+', '$1<YOUR_LLM_KEY>'
-    Set-Content -Path (Join-Path $Repo 'backend\config.example.yaml') -Value $safe -Encoding UTF8
+    Set-Content -Path (Join-Path $Repo 'backend\server\config.example.yaml') -Value $safe -Encoding UTF8
 }
 
 Set-Location $Repo

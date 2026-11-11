@@ -1,4 +1,4 @@
-aliyun-oss:
+﻿aliyun-oss:
     endpoint: yourEndpoint
     access-key-id: yourAccessKeyId
     access-key-secret: yourAccessKeySecret
@@ -71,7 +71,7 @@ email:
     to: xxx@qq.com
     from: xxx@163.com
     host: smtp.163.com
-    secret: <YOUR_JWT_SECRET>
+    secret: xxx
     nickname: test
     port: 465
     is-ssl: true
@@ -262,3 +262,4 @@ zap:
     show-line: true
     log-in-console: true
     retention-day: -1
+

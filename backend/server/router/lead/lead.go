@@ -52,6 +52,9 @@ func (s *LeadRouter) InitLeadRouter(Router *gin.RouterGroup,PublicRouter *gin.Ro
 	leadRouterWithoutRecord.POST("stopDaemon", leadApi.StopDaemon)                                      // 停止监听进程
 	leadRouterWithoutRecord.GET("getWorkbench", leadApi.GetWorkbench)                                  // 今日工作台
 	leadRouterWithoutRecord.GET("getFollowupReminders", leadApi.GetFollowupReminders)                  // 跟进提醒
+	leadRouterWithoutRecord.GET("getLLMConfig", leadApi.GetLLMConfig)                                 // 大模型配置读取
+	leadRouterWithoutRecord.POST("saveLLMConfig", leadApi.SaveLLMConfig)                              // 大模型配置保存
+	leadRouterWithoutRecord.POST("testLLMConfig", leadApi.TestLLMConfig)                              // 大模型连通性测试
 	leadRouterWithoutRecord.GET("tableViewList", leadApi.TableViewList)                                 // 表格视图列表
 	leadRouterWithoutRecord.POST("tableViewSave", leadApi.TableViewSave)                                // 保存表格视图
 	leadRouterWithoutRecord.DELETE("tableViewDelete", leadApi.TableViewDelete)                           // 删除表格视图

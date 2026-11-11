@@ -72,6 +72,7 @@ export const views: Record<LastLevelRouteKey, RouteComponent | (() => Promise<Ro
   "pro-naive_table_row-edit": () => import("@/views/pro-naive/table/row-edit/index.vue"),
   reminders: () => import("@/views/reminders/index.vue"),
   retrieval: () => import("@/views/retrieval/index.vue"),
+  settings_llm: () => import("@/views/settings/llm/index.vue"),
   "user-center": () => import("@/views/user-center/index.vue"),
   wechat: () => import("@/views/wechat/index.vue"),
   workbench: () => import("@/views/workbench/index.vue"),

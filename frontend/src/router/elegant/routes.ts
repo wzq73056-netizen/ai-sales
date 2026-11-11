@@ -782,6 +782,26 @@ export const generatedRoutes: GeneratedRoute[] = [
     }
   },
   {
+    name: 'settings',
+    path: '/settings',
+    component: 'layout.base',
+    meta: {
+      title: 'settings',
+      i18nKey: 'route.settings'
+    },
+    children: [
+      {
+        name: 'settings_llm',
+        path: '/settings/llm',
+        component: 'view.settings_llm',
+        meta: {
+          title: 'settings_llm',
+          i18nKey: 'route.settings_llm'
+        }
+      }
+    ]
+  },
+  {
     name: 'user-center',
     path: '/user-center',
     component: 'layout.base$view.user-center',

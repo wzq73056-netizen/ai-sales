@@ -105,6 +105,8 @@ declare module "@elegant-router/types" {
     "pro-naive_table_row-edit": "/pro-naive/table/row-edit";
     "reminders": "/reminders";
     "retrieval": "/retrieval";
+    "settings": "/settings";
+    "settings_llm": "/settings/llm";
     "user-center": "/user-center";
     "wechat": "/wechat";
     "workbench": "/workbench";
@@ -178,6 +180,7 @@ declare module "@elegant-router/types" {
     | "pro-naive"
     | "reminders"
     | "retrieval"
+    | "settings"
     | "user-center"
     | "wechat"
     | "workbench"
@@ -257,6 +260,7 @@ declare module "@elegant-router/types" {
     | "pro-naive_table_row-edit"
     | "reminders"
     | "retrieval"
+    | "settings_llm"
     | "user-center"
     | "wechat"
     | "workbench"

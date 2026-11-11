@@ -251,6 +251,8 @@ const routeMap: RouteMap = {
   "pro-naive_table_row-edit": "/pro-naive/table/row-edit",
   "reminders": "/reminders",
   "retrieval": "/retrieval",
+  "settings": "/settings",
+  "settings_llm": "/settings/llm",
   "user-center": "/user-center",
   "wechat": "/wechat",
   "workbench": "/workbench",
