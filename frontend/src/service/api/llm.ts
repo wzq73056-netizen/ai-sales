@@ -4,8 +4,6 @@ export interface LLMConfigForm {
   baseUrl: string;
   apiKey: string;
   model: string;
-  kbIdBuyer: string;
-  kbIdSeller: string;
   temperature: number;
 }
 

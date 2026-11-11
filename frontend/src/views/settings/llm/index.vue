@@ -18,8 +18,7 @@ const form = ref<LLMConfigForm>({
   baseUrl: 'https://api.deepseek.com/v1',
   apiKey: '',
   model: 'deepseek-chat',
-  kbIdBuyer: '',
-  kbIdSeller: '',
+
   temperature: 0
 });
 
@@ -33,8 +32,7 @@ async function load() {
       baseUrl: data.baseUrl || '',
       apiKey: data.apiKey || '',
       model: data.model || '',
-      kbIdBuyer: data.kbIdBuyer || '',
-      kbIdSeller: data.kbIdSeller || '',
+
       temperature: data.temperature || 0
     };
     filePath.value = data.filePath || '';
@@ -51,8 +49,7 @@ async function save() {
     baseUrl: form.value.baseUrl.trim(),
     apiKey: form.value.apiKey.trim(),
     model: form.value.model.trim(),
-    kbIdBuyer: form.value.kbIdBuyer.trim(),
-    kbIdSeller: form.value.kbIdSeller.trim(),
+
     temperature: form.value.temperature || 0
   });
 
@@ -124,17 +121,6 @@ onMounted(load);
           <span class="hint">0 最稳定，私信场景建议 0.5–0.8</span>
         </div>
 
-        <div class="row">
-          <label>买方知识库 ID</label>
-          <NInput v-model:value="form.kbIdBuyer" placeholder="留空则用默认" />
-          <span class="hint">对方是客户时，AI 从哪个知识库取素材</span>
-        </div>
-
-        <div class="row">
-          <label>供方知识库 ID</label>
-          <NInput v-model:value="form.kbIdSeller" placeholder="留空则用默认" />
-          <span class="hint">对方是供货商时用的知识库</span>
-        </div>
 
         <div v-if="testResult" class="result" :class="{ ok: testResult.startsWith('连接正常') }">
           {{ testResult }}
