@@ -395,11 +395,11 @@ const local: App.I18n.Schema = {
       projectNews: {
         title: '项目动态',
         moreNews: '更多动态',
-        desc1: 'Soybean 在2021年5月28日创建了开源项目 soybean-admin!',
-        desc2: 'Yanbowe 向 soybean-admin 提交了一个bug，多标签栏不会自适应。',
-        desc3: 'Soybean 准备为 soybean-admin 的发布做充分的准备工作!',
-        desc4: 'Soybean 正在忙于为soybean-admin写项目说明文档！',
-        desc5: 'Soybean 刚才把工作台页面随便写了一些，凑合能看了！'
+        desc1: '前端打包进后端，单进程即可跑整站，不再需要 nginx',
+        desc2: '微信 AI 接待上线，收到图片或敏感话题自动转人工工单',
+        desc3: '支持双向获客，买方与供货方各自的人设、话术和知识库',
+        desc4: '加入客户跟进看板、跟进提醒和阶段转化报表',
+        desc5: '抖音与小红书私信监听上线，评论线索自动清洗入库'
       },
       creativity: '创意'
     },

@@ -398,11 +398,11 @@ const local: App.I18n.Schema = {
       projectNews: {
         title: 'Project News',
         moreNews: 'More News',
-        desc1: 'Soybean created the open source project soybean-admin on May 28, 2021!',
-        desc2: 'Yanbowe submitted a bug to soybean-admin, the multi-tab bar will not adapt.',
-        desc3: 'Soybean is ready to do sufficient preparation for the release of soybean-admin!',
-        desc4: 'Soybean is busy writing project documentation for soybean-admin!',
-        desc5: 'Soybean just wrote some of the workbench pages casually, and it was enough to see!'
+        desc1: 'Frontend bundled into the backend, one process runs the whole site without nginx',
+        desc2: 'WeChat AI reception with automatic handoff on images and sensitive topics',
+        desc3: 'Dual-direction leads - separate personas, scripts and knowledge bases for buyers and suppliers',
+        desc4: 'Customer follow-up board, reminders and stage conversion reports',
+        desc5: 'Douyin and Xiaohongshu DM monitoring with automatic lead cleanup'
       },
       creativity: 'Creativity'
     },
