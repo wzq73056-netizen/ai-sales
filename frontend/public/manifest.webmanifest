@@ -1,6 +1,6 @@
 {
-  "name": "获客工作台",
-  "short_name": "获客",
+  "name": "AI 获客系统",
+  "short_name": "AI 获客",
   "description": "线索采集、客户跟进、私信与微信接待的一体化后台",
   "start_url": "/workbench",
   "scope": "/",

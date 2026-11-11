@@ -6,8 +6,8 @@ defineOptions({
 
 <template>
   <DarkModeContainer class="h-full flex-center">
-    <a href="https://github.com/soybeanjs/soybean-admin/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">
-      Copyright MIT © 2021 Soybean
+    <a href="/LICENSES/MIT-soybean-admin.txt" target="_blank" rel="noopener noreferrer">
+      AI 获客系统 · MIT License
     </a>
   </DarkModeContainer>
 </template>
