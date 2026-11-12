@@ -39,7 +39,7 @@ function Sync-Dir([string]$Source, [string]$Target, [string[]]$ExcludeDirs) {
 
 Write-Log '===== 开始同步 ====='
 
-Sync-Dir $Backend  (Join-Path $Repo 'backend')  @('bin', 'node_modules', 'web', 'upload', 'log', 'latest_log', '.git')
+Sync-Dir $Backend  (Join-Path $Repo 'backend')  @('bin', 'node_modules', '.git', ($Backend + '\server\upload'), ($Backend + '\server\log'), ($Backend + '\server\latest_log'), ($Backend + '\web'))
 Sync-Dir $Frontend (Join-Path $Repo 'frontend') @('node_modules', 'dist', 'dist-ssr', '.git')
 Sync-Dir $Scripts  (Join-Path $Repo 'scripts')  @('node_modules', '__pycache__', '.git')
 

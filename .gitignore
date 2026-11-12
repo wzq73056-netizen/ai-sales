@@ -15,9 +15,12 @@ server/config.yaml
 .env.local
 data/
 *.log
-logs/
-upload/
-uploads/
+# 运行时目录用具体路径，避免误伤 server/utils/upload 这类源码包
+backend/server/log/
+backend/server/latest_log/
+backend/server/upload/
+backend/server/resource/uploads/
+scripts/logs/
 
 # ---------- 运行时数据 ----------
 heartbeat*.txt
