@@ -155,8 +155,11 @@ backend/server/bin/gva.exe
 ## 联系方式
 
 ```
+微信    wengzhaoqin123
 Issue   https://github.com/wzq73056-netizen/ai-sales/issues
-邮箱    <待填写>
 ```
+
+加微信请备注「AI 获客」，否则可能不通过。功能问题和 bug 优先提 Issue，
+方便留档和搜索。
 
 遇到问题优先提 Issue，能附上报错日志和复现步骤最好。

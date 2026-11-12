@@ -43,6 +43,42 @@ Sync-Dir $Backend  (Join-Path $Repo 'backend')  @('bin', 'node_modules', 'web', 
 Sync-Dir $Frontend (Join-Path $Repo 'frontend') @('node_modules', 'dist', 'dist-ssr', '.git')
 Sync-Dir $Scripts  (Join-Path $Repo 'scripts')  @('node_modules', '__pycache__', '.git')
 
+# 清掉上游项目自带的文档噪声，只留本项目的 README 和 docs
+$noise = @(
+    'backend\aiDoc',
+    'backend\README.md',
+    'backend\README-en.md',
+    'backend\AGENT.MD',
+    'backend\CONTRIBUTING.md',
+    'backend\SECURITY.md',
+    'backend\CODE_OF_CONDUCT.md',
+    'backend\.aone_copilot',
+    'backend\.claude',
+    'backend\.codex',
+    'backend\.cursor',
+    'backend\.trae',
+    'backend\server\README.md',
+    'frontend\README.md',
+    'frontend\README.en_US.md',
+    'frontend\CHANGELOG.md',
+    'frontend\CHANGELOG.zh_CN.md',
+    'frontend\AGENTS.md',
+    'frontend\docs',
+    'frontend\.github'
+)
+
+$removed = 0
+foreach ($rel in $noise) {
+    $full = Join-Path $Repo $rel
+
+    if (Test-Path $full) {
+        Remove-Item $full -Recurse -Force -ErrorAction SilentlyContinue
+        $removed++
+    }
+}
+
+if ($removed -gt 0) { Write-Log "已清理上游文档 $removed 处" }
+
 # 配置模板：把真实 config.yaml 脱敏后单独放一份，便于新机器还原
 $cfg = Join-Path $Backend 'server\config.yaml'
 if (Test-Path $cfg) {
