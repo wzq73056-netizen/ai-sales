@@ -33,6 +33,7 @@
 backend/          Go 服务（同时托管前端 dist，单进程跑整站）
 frontend/         Vue 3 管理端
 scripts/          监听脚本、健康检查、备份、通知、启动脚本
+sql/              数据库结构（不含数据）
 LICENSES/         上游项目许可证
 ```
 
@@ -55,6 +56,9 @@ CREATE DATABASE ai_go DEFAULT CHARSET utf8mb4;
 ```
 
 把 `backend/server/config.example.yaml` 复制成 `backend/server/config.yaml`，填入数据库账号密码。
+
+表可以自动建（后端启动时 AutoMigrate 业务表，再调一次 `/init/initdb` 建系统表），
+也可以直接导入 `sql/schema.sql`（只有结构、不含数据）。详见 [docs/database.md](./docs/database.md)。
 
 ### 3. 大模型
 
