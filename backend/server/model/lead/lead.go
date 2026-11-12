@@ -17,7 +17,7 @@ type Lead struct {
   Industry  *string `json:"Industry" form:"Industry" gorm:"column:industry;"`  //行业
   Scale  *string `json:"Scale" form:"Scale" gorm:"column:scale;"`  //规模
   Source  *string `json:"Source" form:"Source" gorm:"column:source;"`  //来源：manual/scrape/import
-  SourceUrl  *string `json:"SourceUrl" form:"SourceUrl" gorm:"column:source_url;"`  //来源链接
+  SourceUrl  *string `json:"SourceUrl" form:"SourceUrl" gorm:"column:source_url;type:text;"`  //来源链接
   Side  *string `json:"Side" form:"Side" gorm:"column:side;"`  //对方角色：buyer=买我们货的客户 / supplier=供货给我们的
   Keyword  *string `json:"Keyword" form:"Keyword" gorm:"column:keyword;"`  //采集关键词
   Score  *int64 `json:"Score" form:"Score" gorm:"column:score;"`  //线索评分 0-100

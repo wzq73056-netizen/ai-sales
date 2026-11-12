@@ -5,14 +5,15 @@ import (
 	"github.com/flipped-aurora/gin-vue-admin/server/global"
 )
 
-// bizModel 注册业务表，首次启动自动建表
+// bizModel 注册业务表
 //
-// 之前这里是空的 AutoMigrate()，新机器必须手工导入 SQL 才有业务表；
-// 现在把业务模型都注册进来，配合 gin-vue-admin 自带的 /init/initdb 就能一次建库。
+// 只建「不存在的表」，已存在的表不动——
+// GORM 的 AutoMigrate 会尝试改列类型，历史数据长一点就会报
+// 「Data truncated for column xxx」把启动流程打断。
 func bizModel() error {
 	db := global.GVA_DB
 
-	return db.AutoMigrate(
+	models := []any{
 		// 线索
 		&leadModel.Lead{},
 
@@ -27,7 +28,17 @@ func bizModel() error {
 		&leadModel.WxCustomer{},
 		&leadModel.WxFollowup{},
 		&leadModel.WxHandoff{},
+	}
 
+	for _, model := range models {
+		if db.Migrator().HasTable(model) {
+			continue
+		}
 
-	)
+		if err := db.AutoMigrate(model); err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
