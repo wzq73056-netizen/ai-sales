@@ -1,5 +1,10 @@
 # ai-sales · 本地部署的 AI 获客系统
 
+[![CI](https://github.com/wzq73056-netizen/ai-sales/actions/workflows/ci.yml/badge.svg)](https://github.com/wzq73056-netizen/ai-sales/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
+[![Go](https://img.shields.io/badge/Go-1.22%2B-00ADD8.svg)](https://go.dev/)
+[![Vue](https://img.shields.io/badge/Vue-3-42b883.svg)](https://vuejs.org/)
+
 一套跑在自己电脑上的双向获客工具：从抖音、小红书、微信收集线索，用大模型自动回复和筛选，人工跟进成交。
 
 不是 SaaS，不依赖云服务，数据全部留在本机。
