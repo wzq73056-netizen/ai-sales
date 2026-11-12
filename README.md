@@ -148,7 +148,7 @@ backend/server/bin/gva.exe
 
 - [docs/database.md](./docs/database.md) — 数据库结构、建库方式、业务模型位置
 - [docs/models.md](./docs/models.md) — 用到的模型、配置方式、换模型、未使用的模型
-- [docs/git-sync.md](./scripts/docs/git-sync.md) — 代码自动同步到 git 的配置
+- [scripts/docs/git-sync.md](./scripts/docs/git-sync.md) — 代码自动同步到 git 的配置
 
 ## 数据库支持
 
