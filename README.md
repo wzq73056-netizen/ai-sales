@@ -24,8 +24,8 @@
 | 数据库 | MySQL 8 |
 | 浏览器自动化 | Playwright over CDP（连本机 Edge） |
 | 微信 | Python + Windows UI 自动化（wxauto 方式，非注入） |
-| 大模型 | 任意 OpenAI 兼容接口（默认 DeepSeek） |
-| 语音 | 本地 whisper 转写（可选） |
+| 大模型 | deepseek-chat 等任意 OpenAI 兼容接口 |
+| 语音 | SenseVoice（sherpa-onnx）本地转写，可选 |
 
 ## 目录结构
 
@@ -60,19 +60,37 @@ CREATE DATABASE ai_go DEFAULT CHARSET utf8mb4;
 表可以自动建（后端启动时 AutoMigrate 业务表，再调一次 `/init/initdb` 建系统表），
 也可以直接导入 `sql/schema.sql`（只有结构、不含数据）。详见 [docs/database.md](./docs/database.md)。
 
-### 3. 大模型
+### 3. 大模型（必需，否则 AI 不回复）
 
-在 `E:\ai\data\llm.json`（Linux 下改脚本里的路径）建：
+两种配法，改完即时生效：
+
+**后台页面**：系统管理 → 模型配置，填接口地址、API Key、模型名，点「测试连接」验证。
+**配置文件**：编辑 `data/llm.json`
 
 ```json
 {
   "base_url": "https://api.deepseek.com/v1",
   "api_key": "sk-your-key",
-  "model": "deepseek-chat"
+  "model": "deepseek-chat",
+  "temperature": 0.6
 }
 ```
 
-不填也能跑，但 AI 回复和话术生成会不可用。
+支持任何 OpenAI 兼容接口（DeepSeek / 通义 / Kimi / 本地 Ollama）。
+
+### 3.1 语音转文字（可选）
+
+微信语音默认能播放但不转文字。要转文字需装本地模型：
+
+```bash
+pip install sherpa-onnx numpy scipy pilk
+# 下载 SenseVoice 模型（model.int8.onnx + tokens.txt）放到 scripts/models/
+python scripts/serve_audio.py --port 8898
+```
+
+228 MB 的模型文件不进仓库，需自行下载。
+
+完整说明见 [docs/models.md](./docs/models.md)。
 
 ### 4. 构建
 
@@ -115,6 +133,22 @@ backend/server/bin/gva.exe
 | 健康检查 | 每 2 分钟 | 掉线自动拉起，桌面弹窗告警 |
 | 数据库备份 | 每天 03:30 | 导出到本地 backup 目录 |
 | 代码同步 | 每天 22:30 | 推送到自己的 Git 仓库（可选） |
+
+## 用到的模型
+
+| 能力 | 模型 | 部署 | 必需 |
+|---|---|---|---|
+| 私信回复 / 话术生成 | deepseek-chat（可换任意 OpenAI 兼容模型） | API | 是 |
+| 语音转文字 | SenseVoice（sherpa-onnx） | 本地 8898 | 否 |
+| 知识库检索 | BM25（无模型） | MySQL 内置 | 自动 |
+
+详见 [docs/models.md](./docs/models.md)。
+
+## 文档索引
+
+- [docs/database.md](./docs/database.md) — 数据库结构、建库方式、业务模型位置
+- [docs/models.md](./docs/models.md) — 用到的模型、配置方式、换模型、未使用的模型
+- [docs/git-sync.md](./scripts/docs/git-sync.md) — 代码自动同步到 git 的配置
 
 ## 数据库支持
 

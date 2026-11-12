@@ -31,3 +31,9 @@ Thumbs.db
 .vscode/
 db.json
 llm.json
+
+# ---------- 模型文件（体积大，自行下载） ----------
+*.onnx
+*.pt
+*.bin
+tokens.txt
