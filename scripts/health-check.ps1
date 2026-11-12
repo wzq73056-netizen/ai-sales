@@ -5,7 +5,7 @@
 #   2. 抖音私信监听：进程在 + 心跳
 #   3. 小红书私信监听：进程在 + 心跳
 #   4. 语音转写服务 8898
-#   5. 后端 8888 / 前端 9527
+#   5. 后端 8888（前端由后端托管，不再单独检查 9527）
 #   6. CDP 9333 通不通（不通就重启浏览器）
 #   7. 浏览器标签页卫生（脚本跑完会残留标签，顺手清掉）
 #
@@ -58,6 +58,13 @@ function Test-Heartbeat([string]$file, [double]$minutes) {
 
   return ((Get-Date) - $item.LastWriteTime).TotalMinutes -le $minutes
 }
+# ---- 0. 项目没启动就什么都不做 ----
+# 后端（gva.exe）不在运行 = 用户没开系统。
+# 这种情况下不要做任何检查、不要告警、不要自动拉起，直接退出。
+if (-not (Get-Process gva -ErrorAction SilentlyContinue)) {
+  exit 0
+}
+
 
 # ---- 1. 微信监听 ----
 $wxProc = Get-WatcherProcess 'wx_watch.py'
@@ -136,10 +143,8 @@ if (-not (Get-Process gva -ErrorAction SilentlyContinue)) {
   $actions++
 }
 
-if (-not (Test-Port 9527)) {
-  Write-Log '前端未运行 → 拉起'
-  $actions++
-}
+# 前端已由后端托管（8888），9527 dev server 不再需要；
+# 之前这里检查 9527 永远失败，导致健康检查每 2 分钟就调用一次 start-all，把监听进程反复重启。
 
 # ---- 6. 浏览器 CDP ----
 if (-not (Test-Port 9333)) {
