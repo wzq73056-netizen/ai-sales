@@ -28,6 +28,9 @@ func bizModel() error {
 		&leadModel.WxCustomer{},
 		&leadModel.WxFollowup{},
 		&leadModel.WxHandoff{},
+
+		// 表格视图（列偏好、保存的视图）
+		&leadModel.TableView{},
 	}
 
 	for _, model := range models {
