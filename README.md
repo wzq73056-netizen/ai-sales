@@ -116,6 +116,15 @@ backend/server/bin/gva.exe
 | 数据库备份 | 每天 03:30 | 导出到本地 backup 目录 |
 | 代码同步 | 每天 22:30 | 推送到自己的 Git 仓库（可选） |
 
+## 数据库支持
+
+| 数据库 | 状态 |
+|---|---|
+| MySQL 8.0 | ✅ 已验证 |
+| PostgreSQL | ⚠️ 未验证（业务 SQL 有 MySQL 专用函数，需要改造） |
+
+建库、表结构、业务模型位置见 [docs/database.md](./docs/database.md)。
+
 ## 已知限制
 
 ```
@@ -143,3 +152,11 @@ backend/server/bin/gva.exe
 - soybean-admin —— MIT License
 
 使用时请一并遵守这两份许可证的要求。
+## 联系方式
+
+```
+Issue   https://github.com/wzq73056-netizen/ai-sales/issues
+邮箱    <待填写>
+```
+
+遇到问题优先提 Issue，能附上报错日志和复现步骤最好。
