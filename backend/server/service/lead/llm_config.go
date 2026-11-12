@@ -22,7 +22,15 @@ type LLMConfig struct {
 }
 
 // llmConfigFile 配置文件位置（优先于环境变量，改完即时生效）
-const llmConfigFile = `E:\ai\data\llm.json`
+//
+// 可用环境变量 LLM_CONFIG_FILE 覆盖，便于测试和其它平台的部署。
+func llmConfigFile() string {
+	if p := strings.TrimSpace(os.Getenv("LLM_CONFIG_FILE")); p != "" {
+		return p
+	}
+
+	return `E:\ai\data\llm.json`
+}
 
 // LoadLLMConfig 读取配置：文件优先，环境变量兜底
 func LoadLLMConfig() LLMConfig {
@@ -34,13 +42,12 @@ func LoadLLMConfig() LLMConfig {
 		KBIDSeller: strings.TrimSpace(os.Getenv("DM_KB_ID_SELLER")),
 	}
 
-	raw, err := os.ReadFile(llmConfigFile)
+	path := llmConfigFile()
+
+	raw, err := os.ReadFile(path)
 	if err != nil {
 		return cfg
 	}
-
-	// 文件可能带 UTF-8 BOM（编辑器/脚本写入），不去掉 json 会解析失败
-	raw = bytes.TrimPrefix(raw, []byte{0xEF, 0xBB, 0xBF})
 
 	var fromFile LLMConfig
 	if err := json.Unmarshal(raw, &fromFile); err != nil {
@@ -91,12 +98,13 @@ func SaveLLMConfig(cfg LLMConfig) error {
 		return err
 	}
 
-	dir := llmConfigFile[:strings.LastIndex(llmConfigFile, `\`)]
+	path := llmConfigFile()
+	dir := path[:strings.LastIndex(path, `\`)]
 	if err := os.MkdirAll(dir, 0o755); err != nil {
 		return err
 	}
 
-	return os.WriteFile(llmConfigFile, payload, 0o600)
+	return os.WriteFile(path, payload, 0o600)
 }
 
 // TestLLM 用最小请求验证配置是否可用
