@@ -134,6 +134,43 @@ function Get-ApiHeaders {
   return @{ 'x-token' = $login.data.token }
 }
 
+# 启动小红书采集号浏览器（独立 profile + 独立端口，和抖音隔离）
+function Start-XhsBrowser {
+  try {
+    $headers = Get-ApiHeaders
+    $devices = (Invoke-RestMethod -Uri "$API_BASE/lead/getDouyinDevices" -Headers $headers -TimeoutSec 10).data.list
+  } catch {
+    Write-Host '拿不到账号列表，跳过小红书浏览器'
+    return
+  }
+
+  $xhs = @($devices | Where-Object { $_.Platform -eq 'xhs' -and $_.Status -eq 1 })
+
+  foreach ($device in $xhs) {
+    $port = [int]$device.CdpPort
+    $profile = $device.ProfileDir
+
+    if ((Test-NetConnection -ComputerName 127.0.0.1 -Port $port -WarningAction SilentlyContinue).TcpTestSucceeded) {
+      Write-Host "小红书浏览器已在运行（端口 $port）"
+      continue
+    }
+
+    if (-not (Test-Path $profile)) {
+      Write-Host "小红书 profile 不存在：$profile"
+      continue
+    }
+
+    $exe = if ($device.BrowserPath) { $device.BrowserPath } else { $EDGE }
+    Start-Process -FilePath $exe -ArgumentList "--remote-debugging-port=$port", "--user-data-dir=$profile", '--no-first-run', '--no-default-browser-check', 'https://www.xiaohongshu.com/chat'
+
+    for ($i = 0; $i -lt 40; $i++) {
+      Start-Sleep -Milliseconds 500
+      if ((Test-NetConnection -ComputerName 127.0.0.1 -Port $port -WarningAction SilentlyContinue).TcpTestSucceeded) { break }
+    }
+
+    Write-Host "小红书浏览器已启动（端口 $port，profile $([System.IO.Path]::GetFileName($profile))）"
+  }
+}
 function Start-DouyinWatch {
   $devices = @()
 
@@ -184,7 +221,7 @@ function Start-DouyinWatch {
       continue
     }
 
-    Start-Process -FilePath $NODE -ArgumentList 'E:\ai\scraper\dy_dm_watch.mjs', '--interval', '60', '--send', '--device', "$id" -WindowStyle Hidden -WorkingDirectory 'E:\ai\scraper' -RedirectStandardOutput "$LOGDIR\dydm-$id.out.log" -RedirectStandardError "$LOGDIR\dydm-$id.err.log"
+    Start-Process -FilePath $NODE -ArgumentList 'E:\ai\scraper\dy_dm_watch.mjs', '--interval', '300', '--send', '--device', "$id" -WindowStyle Hidden -WorkingDirectory 'E:\ai\scraper' -RedirectStandardOutput "$LOGDIR\dydm-$id.out.log" -RedirectStandardError "$LOGDIR\dydm-$id.err.log"
 
     Write-Host "抖音私信监听 #$id $($device.Name) 已启动"
   }
@@ -199,7 +236,8 @@ function Start-XhsWatch {
     return
   }
 
-  Start-Process -FilePath $NODE -ArgumentList 'E:\ai\scraper\xhs_dm_watch.mjs', '--interval', '60', '--send' -WindowStyle Hidden -WorkingDirectory 'E:\ai\scraper' -RedirectStandardOutput "$LOGDIR\xhsdm.out.log" -RedirectStandardError "$LOGDIR\xhsdm.err.log"
+  $env:CDP_XHS = 'http://127.0.0.1:9334'
+     Start-Process -FilePath $NODE -ArgumentList 'E:\ai\scraper\xhs_dm_watch.mjs', '--interval', '300', '--send' -WindowStyle Hidden -WorkingDirectory 'E:\ai\scraper' -RedirectStandardOutput "$LOGDIR\xhsdm.out.log" -RedirectStandardError "$LOGDIR\xhsdm.err.log"
 
   Write-Host '小红书私信监听已启动（白名单：冬冬瓜咚）'
 }
@@ -214,6 +252,7 @@ Start-Backend
 Start-Frontend
 Start-Audio
 Start-Watcher
+Start-XhsBrowser
 Start-DouyinWatch
 Start-XhsWatch
 Write-Host '=== 完成 ==='
