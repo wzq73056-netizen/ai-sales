@@ -1,6 +1,6 @@
-﻿# 微信加好友（桌面端 4.x）
+﻿# 本机客户端加好友（桌面端 4.x）
 #
-# 微信没有可用 UIA 树 → 用「窗口截图 + Windows 自带 OCR」定位按钮坐标。
+# 客户端没有可用 UIA 树 → 用「窗口截图 + Windows 自带 OCR」定位按钮坐标。
 #
 # 用法：
 #   powershell -ExecutionPolicy Bypass -File client_add_friend.ps1 -Contact "13800001111" -Remark "你好，谈鸡蛋批发" -Send
@@ -75,7 +75,7 @@ function Get-WechatPid {
   $proc = Get-Process Weixin, WeChat -ErrorAction SilentlyContinue |
     Where-Object { $_.MainWindowHandle -ne 0 } | Select-Object -First 1
 
-  if (-not $proc) { throw '微信没在运行' }
+  if (-not $proc) { throw '客户端没在运行' }
 
   return [uint32]$proc.Id
 }

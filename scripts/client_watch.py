@@ -36,7 +36,7 @@ import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 
-SKILL_SCRIPTS = Path(r'E:\ai\vendor\yichen-skills\yichen-wechat-local-vault\scripts')
+SKILL_SCRIPTS = Path(os.environ.get('CLIENT_SKILL_DIR') or r'E:\ai\vendor\client-live\scripts')
 sys.path.insert(0, str(SKILL_SCRIPTS))
 
 import windows_live as wl          # noqa: E402
@@ -45,12 +45,12 @@ from windows_crypto import decrypt_pages        # noqa: E402
 from windows_wal import read_snapshot           # noqa: E402
 from windows_native import process_ids          # noqa: E402
 
-DEFAULT_ROOT = Path(r'C:\Users\11\xwechat_files\wxid_15d0megq0l7822_302a\db_storage')
-WORK = Path(r'E:\ai\data\wx_live')
+DEFAULT_ROOT = Path(os.environ.get('CLIENT_DATA_ROOT') or '')
+WORK = Path(r'E:\ai\data\client_live')
 STATUS = Path(r'E:\ai\data\client_watch_status.json')
 MESSAGES = Path(r'E:\ai\data\client_messages.jsonl')
 VAULT_CLI = SKILL_SCRIPTS / 'vault_cli.py'
-HANDLED = Path(r'E:\ai\data\wx_handled.json')
+HANDLED = Path(r'E:\ai\data\client_handled.json')
 HEARTBEAT = Path(r'E:\ai\data\client_heartbeat.txt')
 KEY_FAIL_FLAG = Path(r'E:\ai\data\wx_key_failed.flag')
 

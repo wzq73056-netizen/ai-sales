@@ -1,4 +1,4 @@
-﻿# 微信发送（聚焦窗口 → 搜索联系人 → 输入 → 回车 → 还回焦点）
+﻿# 本机客户端发送（聚焦窗口 → 搜索联系人 → 输入 → 回车 → 还回焦点）
 # 用法：
 #   .\client_send.ps1 -Contact "张三" -Message "你好" -DryRun     # 只输入不发送
 #   .\client_send.ps1 -Contact "张三" -Message "你好"             # 真实发送
@@ -101,7 +101,7 @@ function Send-Text {
 
 
 $hwnd = [WxSend]::Find('微信')
-if ($hwnd -eq 0) { Write-Output '{"ok":false,"reason":"找不到微信窗口"}'; exit 2 }
+if ($hwnd -eq 0) { Write-Output '{"ok":false,"reason":"找不到客户端窗口"}'; exit 2 }
 
 # 记住用户当前在用什么窗口，发完还回去
 $previous = ([WxSend]::GetForegroundWindow()).ToInt64()
@@ -121,7 +121,7 @@ for ($i = 0; $i -lt 4; $i++) {
   Start-Sleep -Milliseconds 250
 }
 
-if (-not $focused) { Write-Output '{"ok":false,"reason":"无法把微信置前"}'; exit 3 }
+if (-not $focused) { Write-Output '{"ok":false,"reason":"无法把客户端置前"}'; exit 3 }
 
 try {
   # Ctrl+F 搜索联系人
