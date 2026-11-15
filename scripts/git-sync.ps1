@@ -44,21 +44,14 @@ Sync-Dir $Frontend (Join-Path $Repo 'frontend') @('node_modules', 'dist', 'dist-
 Sync-Dir $Scripts  (Join-Path $Repo 'scripts')  @('node_modules', '__pycache__', '.git')
 
 # 微信自动化脚本不进公开仓库（平台条款敏感，仅本地保留）
-$wxNoise = @(
-  'scripts\wx_watch.py',
-  'scripts\wx_add_friend.ps1',
-  'scripts\wx_add_friend3.ps1',
-  'scripts\wx_add_friend_v2.ps1',
-  'scripts\wx_send.ps1',
-  'scripts\local-start.ps1',
-  'scripts\_bench_wx.py',
-  'scripts\_peek.py',
-  'scripts\_peek2.py',
-  'scripts\_probe_full.py',
-  'scripts\_probe_hist.py',
-  'scripts\_probe_ts.py',
-  'scripts\_probe_types.py'
-)
+# 本机客户端自动化脚本不进公开仓库（按通配匹配，避免仓库里出现具体文件名）
+$localOnly = @('wx_*', 'client_watch.py', 'local-start.ps1', '_bench_*', '_peek*', '_probe_*')
+$wxNoise = @()
+foreach ($pat in $localOnly) {
+  $full = Join-Path $Repo ('scripts\' + $pat)
+  $wxNoise += Get-ChildItem -Path $full -File -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName
+}
+$wxNoise = $wxNoise | ForEach-Object { $_.Replace($Repo + '\', '') } | Select-Object -Unique
 $wxRemoved = 0
 foreach ($f in $wxNoise) {
   $full = Join-Path $Repo $f

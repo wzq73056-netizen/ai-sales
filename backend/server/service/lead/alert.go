@@ -19,7 +19,7 @@ type WxLoginStatus struct {
 
 const (
 	wxKeyFailFlag    = `E:\ai\data\client_key_failed.flag`
-	wxHeartbeatFile  = `E:\ai\data\wx_heartbeat.txt`
+	clientHeartbeatFile = `E:\ai\data\client_heartbeat.txt`
 	wxFlagWarnLimit  = 10 * time.Minute
 	wxHeartbeatLimit = 3 * time.Minute
 )

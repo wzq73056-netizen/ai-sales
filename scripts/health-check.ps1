@@ -1,7 +1,7 @@
 ﻿# 健康检查（由计划任务 DSH-AI-Sales-Health 每 2 分钟调用）
 #
 # 检查项：
-#   1. 微信监听：进程在 + 心跳在 3 分钟内更新 + 有没有掉登录标记
+#   1. 本机客户端监听：进程在 + 心跳在 3 分钟内更新 + 有没有掉登录标记
 #   2. 抖音私信监听：进程在 + 心跳
 #   3. 小红书私信监听：进程在 + 心跳
 #   4. 语音转写服务 8898
@@ -66,9 +66,9 @@ if (-not (Get-Process gva -ErrorAction SilentlyContinue)) {
 }
 
 
-# ---- 1. 微信监听 ----
-$wxProc = Get-WatcherProcess 'wx_watch.py'
-$wxBeat = Test-Heartbeat 'E:\ai\data\wx_heartbeat.txt' 3
+# ---- 1. 本机客户端监听 ----
+$wxProc = Get-WatcherProcess 'client_watch.py'
+$wxBeat = Test-Heartbeat 'E:\ai\data\client_heartbeat.txt' 3
 $wxFlag = Get-Item 'E:\ai\data\wx_key_failed.flag' -ErrorAction SilentlyContinue
 
 if ($wxFlag) {
@@ -82,10 +82,10 @@ if ($wxFlag) {
 }
 
 if (-not $wxProc) {
-  Write-Log '微信监听未运行 → 拉起'
+  Write-Log '本机客户端监听未运行 → 拉起'
   $actions++
 } elseif (-not $wxBeat) {
-  Write-Log '微信监听心跳超过 3 分钟（假活）→ 重启'
+  Write-Log '本机监听心跳超过 3 分钟（假活）→ 重启'
 
   & powershell -NoProfile -ExecutionPolicy Bypass -File 'E:\ai\scripts\notify.ps1' `
     -Title '微信监听假活' `
