@@ -42,6 +42,15 @@ Write-Log '===== 开始同步 ====='
 Sync-Dir $Backend  (Join-Path $Repo 'backend')  @('bin', 'node_modules', '.git', ($Backend + '\server\upload'), ($Backend + '\server\log'), ($Backend + '\server\latest_log'), ($Backend + '\web'))
 Sync-Dir $Frontend (Join-Path $Repo 'frontend') @('node_modules', 'dist', 'dist-ssr', '.git')
 Sync-Dir $Scripts  (Join-Path $Repo 'scripts')  @('node_modules', '__pycache__', '.git')
+# 采集脚本：只同步 .mjs，profile / node_modules / 数据一律不进仓库
+$ScraperTarget = Join-Path $Repo 'scraper'
+New-Item -ItemType Directory -Force -Path $ScraperTarget | Out-Null
+$mjsCount = 0
+Get-ChildItem 'E:\ai\scraper' -Filter '*.mjs' -File -ErrorAction SilentlyContinue | ForEach-Object {
+  Copy-Item $_.FullName (Join-Path $ScraperTarget $_.Name) -Force
+  $mjsCount++
+}
+Write-Log "同步采集脚本 $mjsCount 个（仅 .mjs）"
 
 # 微信自动化脚本不进公开仓库（平台条款敏感，仅本地保留）
 # 只排除本机专用的配置和调试脚本；业务脚本正常入库
