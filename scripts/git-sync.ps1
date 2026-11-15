@@ -50,7 +50,14 @@ $wxNoise = @(
   'scripts\wx_add_friend3.ps1',
   'scripts\wx_add_friend_v2.ps1',
   'scripts\wx_send.ps1',
-  'scripts\local-start.ps1'
+  'scripts\local-start.ps1',
+  'scripts\_bench_wx.py',
+  'scripts\_peek.py',
+  'scripts\_peek2.py',
+  'scripts\_probe_full.py',
+  'scripts\_probe_hist.py',
+  'scripts\_probe_ts.py',
+  'scripts\_probe_types.py'
 )
 $wxRemoved = 0
 foreach ($f in $wxNoise) {

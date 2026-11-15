@@ -79,25 +79,25 @@ func daemonSpecs() map[string]daemonSpec {
 			logName:   "xhswatch",
 			heartbeat: `E:\ai\data\xhs_heartbeat.txt`,
 		},
-		"wechat": {
-			key:       "wechat",
-			name:      "微信监听",
-			desc:      "读本地微信消息、自动回复、执行加好友任务",
+		"client": {
+			key:       "client",
+			name:      "本机客户端监听",
+			desc:      "读取本机客户端消息、自动回复、执行加好友任务（脚本需自行配置）",
 			program:   pythonExe,
-			args:      []string{filepath.Join(scriptsDir, "wx_watch.py"), "--interval", "1.5", "--reply", "--send"},
+			args:      []string{filepath.Join(scriptsDir, "client_watch.py"), "--interval", "1.5", "--reply", "--send"},
 			workdir:   scriptsDir,
-			logName:   "wxwatch",
-			heartbeat: `E:\ai\data\wx_heartbeat.txt`,
+			logName:   "clientwatch",
+			heartbeat: `E:\ai\data\client_heartbeat.txt`,
 		},
 	}
 }
 
-// GetDaemons 返回三个监听进程的当前状态
+// GetDaemons 返回各监听进程的当前状态
 func (leadService *LeadService) GetDaemons() ([]Daemon, error) {
 	specs := daemonSpecs()
 	states := loadDaemonState()
 
-	order := []string{"douyin", "xhs", "wechat"}
+	order := []string{"douyin", "xhs", "client"}
 	list := make([]Daemon, 0, len(order))
 
 	for _, key := range order {

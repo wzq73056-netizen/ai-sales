@@ -7,7 +7,7 @@ import (
 
 // GetDaemons 监听进程状态
 // @Tags Lead
-// @Summary 获取抖音/小红书/微信监听进程状态
+// @Summary 获取各监听进程状态
 // @Router /lead/getDaemons [get]
 func (leadApi *LeadApi) GetDaemons(c *gin.Context) {
 	list, err := leadService.GetDaemons()

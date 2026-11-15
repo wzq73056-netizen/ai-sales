@@ -208,7 +208,7 @@ func (leadService *LeadService) RunWxAddOnce() (map[string]any, error) {
 
 	return map[string]any{
 		"pending": int(pending),
-		"note":    "已放行，微信监听器会在几秒内执行",
+		"note":    "已放行，本机监听器会在几秒内执行",
 	}, nil
 }
 
