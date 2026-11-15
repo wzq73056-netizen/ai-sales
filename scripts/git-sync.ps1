@@ -43,6 +43,23 @@ Sync-Dir $Backend  (Join-Path $Repo 'backend')  @('bin', 'node_modules', '.git',
 Sync-Dir $Frontend (Join-Path $Repo 'frontend') @('node_modules', 'dist', 'dist-ssr', '.git')
 Sync-Dir $Scripts  (Join-Path $Repo 'scripts')  @('node_modules', '__pycache__', '.git')
 
+# 微信自动化脚本不进公开仓库（平台条款敏感，仅本地保留）
+$wxNoise = @(
+  'scripts\wx_watch.py',
+  'scripts\wx_add_friend.ps1',
+  'scripts\wx_add_friend3.ps1',
+  'scripts\wx_add_friend_v2.ps1',
+  'scripts\wx_send.ps1'
+)
+$wxRemoved = 0
+foreach ($f in $wxNoise) {
+  $full = Join-Path $Repo $f
+  if (Test-Path $full) {
+    Remove-Item $full -Force -ErrorAction SilentlyContinue
+    $wxRemoved++
+  }
+}
+if ($wxRemoved -gt 0) { Write-Log "已移除微信自动化脚本 $wxRemoved 个（仅本地保留）" }
 # 清掉上游项目自带的文档噪声，只留本项目的 README 和 docs
 $noise = @(
     'backend\aiDoc',
