@@ -29,7 +29,7 @@ if ($gva) {
 }
 
 # 三个监听
-Stop-ByName '微信监听' { $_.Name -eq 'python.exe' -and $_.CommandLine -like '*wx_watch*' }
+Stop-ByName '本机客户端监听' { $_.Name -eq 'python.exe' -and $_.CommandLine -like '*client_watch*' }
 Stop-ByName '抖音监听' { $_.Name -eq 'node.exe' -and $_.CommandLine -like '*dy_dm_watch*' }
 Stop-ByName '小红书监听' { $_.Name -eq 'node.exe' -and $_.CommandLine -like '*xhs_dm_watch*' }
 

@@ -25,7 +25,7 @@ function Stop-All {
   Write-Host '停止服务…'
 
   Get-CimInstance Win32_Process -Filter "Name='python.exe'" |
-    Where-Object { $_.CommandLine -like '*wx_watch*' -or $_.CommandLine -like '*client_watch*' } |
+    Where-Object { $_.CommandLine -like '*client_watch*' } |
     ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }
 
   Get-CimInstance Win32_Process -Filter "Name='node.exe'" |

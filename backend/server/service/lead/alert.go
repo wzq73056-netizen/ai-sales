@@ -49,7 +49,7 @@ func (leadService *LeadService) GetWxLoginStatus() WxLoginStatus {
 		status.Message = "本机客户端掉登录了：请在工作机重新登录，否则收不到消息、也不会自动回复"
 	}
 
-	if info, err := os.Stat(wxHeartbeatFile); err == nil {
+	if info, err := os.Stat(clientHeartbeatFile); err == nil {
 		status.LastSuccess = info.ModTime().Format("2006-01-02 15:04:05")
 
 		// 心跳断了也说明监听停了

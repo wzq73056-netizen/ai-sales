@@ -79,16 +79,7 @@ func daemonSpecs() map[string]daemonSpec {
 			logName:   "xhswatch",
 			heartbeat: `E:\ai\data\xhs_heartbeat.txt`,
 		},
-		"client": {
-			key:       "client",
-			name:      "本机客户端监听",
-			desc:      "读取本机客户端消息、自动回复、执行加好友任务（脚本需自行配置）",
-			program:   pythonExe,
-			args:      []string{filepath.Join(scriptsDir, "client_watch.py"), "--interval", "1.5", "--reply", "--send"},
-			workdir:   scriptsDir,
-			logName:   "clientwatch",
-			heartbeat: `E:\ai\data\client_heartbeat.txt`,
-		},
+
 	}
 }
 
@@ -97,7 +88,7 @@ func (leadService *LeadService) GetDaemons() ([]Daemon, error) {
 	specs := daemonSpecs()
 	states := loadDaemonState()
 
-	order := []string{"douyin", "xhs", "client"}
+	order := []string{"douyin", "xhs"}
 	list := make([]Daemon, 0, len(order))
 
 	for _, key := range order {

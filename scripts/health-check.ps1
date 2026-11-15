@@ -88,7 +88,7 @@ if (-not $wxProc) {
   Write-Log '本机监听心跳超过 3 分钟（假活）→ 重启'
 
   & powershell -NoProfile -ExecutionPolicy Bypass -File 'E:\ai\scripts\notify.ps1' `
-    -Title '微信监听假活' `
+    -Title '本机监听假活' `
     -Body '心跳超过 3 分钟没更新，已自动重启监听进程。' 2>&1 | Out-Null
   $wxProc | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }
   $actions++

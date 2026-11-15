@@ -39,7 +39,7 @@ $py = 'C:\Users\11\.dsh\dsh-runtimes\dsh-primary-runtime\dependencies\python\pyt
 $pyOk = $true
 $pyDetail = ''
 
-foreach ($file in @('E:\ai\scripts\wx_watch.py')) {
+foreach ($file in @('E:\ai\scripts\client_watch.py')) {
   if (-not (Test-Path $file)) { continue }
 
   $out = & $py -m py_compile $file 2>&1
@@ -50,7 +50,7 @@ foreach ($file in @('E:\ai\scripts\wx_watch.py')) {
   }
 }
 
-Add-Result 'Python 脚本 (wx_watch.py)' $pyOk $pyDetail
+Add-Result 'Python 脚本 (client_watch.py)' $pyOk $pyDetail
 
 Write-Host '=== 4. Vue 页面编译 ===' -ForegroundColor Cyan
 $checkScript = @'
