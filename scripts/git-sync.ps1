@@ -46,13 +46,12 @@ Sync-Dir $Scripts  (Join-Path $Repo 'scripts')  @('node_modules', '__pycache__',
 $ScraperTarget = Join-Path $Repo 'scraper'
 New-Item -ItemType Directory -Force -Path $ScraperTarget | Out-Null
 $mjsCount = 0
-Get-ChildItem 'E:\ai\scraper' -Filter '*.mjs' -File -ErrorAction SilentlyContinue | ForEach-Object {
+Get-ChildItem 'E:\ai\scraper' -Filter '*.mjs' -File -ErrorAction SilentlyContinue | Where-Object { $_.Name -notlike '_*' } | ForEach-Object {
   Copy-Item $_.FullName (Join-Path $ScraperTarget $_.Name) -Force
   $mjsCount++
 }
 Write-Log "同步采集脚本 $mjsCount 个（仅 .mjs）"
 
-# 微信自动化脚本不进公开仓库（平台条款敏感，仅本地保留）
 # 只排除本机专用的配置和调试脚本；业务脚本正常入库
 $localOnly = @('local-start.ps1', '_bench_*', '_peek*', '_probe_*')
 $wxNoise = @()
@@ -155,5 +154,3 @@ if ($pushCode -ne 0) {
     Write-Log "推送失败，git 退出码 $pushCode"
     exit 1
 }
-
-Write-Log '推送成功'
