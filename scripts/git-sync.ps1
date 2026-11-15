@@ -44,8 +44,8 @@ Sync-Dir $Frontend (Join-Path $Repo 'frontend') @('node_modules', 'dist', 'dist-
 Sync-Dir $Scripts  (Join-Path $Repo 'scripts')  @('node_modules', '__pycache__', '.git')
 
 # 微信自动化脚本不进公开仓库（平台条款敏感，仅本地保留）
-# 本机客户端自动化脚本不进公开仓库（按通配匹配，避免仓库里出现具体文件名）
-$localOnly = @('wx_*', 'client_watch.py', 'local-start.ps1', '_bench_*', '_peek*', '_probe_*')
+# 只排除本机专用的配置和调试脚本；业务脚本正常入库
+$localOnly = @('local-start.ps1', '_bench_*', '_peek*', '_probe_*')
 $wxNoise = @()
 foreach ($pat in $localOnly) {
   $full = Join-Path $Repo ('scripts\' + $pat)
