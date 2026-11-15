@@ -122,6 +122,18 @@ clone 下来直接能跑：
 账号被限流        需要降频或换号，属于平台风控范畴
 ```
 
+### 本机客户端监听的环境变量
+
+`scripts/client_watch.py` 需要两个环境变量才能运行：
+
+```powershell
+$env:CLIENT_DATA_ROOT = '客户端数据目录（db_storage）'
+$env:CLIENT_SKILL_DIR  = '依赖脚本目录（vendor/client-live/scripts）'
+```
+
+不设置会直接报错。目录只读，脚本不会修改客户端文件。以普通用户权限运行，
+不要用管理员权限（读不到当前用户的密钥）。
+
 ## 六、授权与支持
 
 ```
