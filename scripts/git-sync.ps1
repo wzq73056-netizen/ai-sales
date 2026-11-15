@@ -49,7 +49,8 @@ $wxNoise = @(
   'scripts\wx_add_friend.ps1',
   'scripts\wx_add_friend3.ps1',
   'scripts\wx_add_friend_v2.ps1',
-  'scripts\wx_send.ps1'
+  'scripts\wx_send.ps1',
+  'scripts\local-start.ps1'
 )
 $wxRemoved = 0
 foreach ($f in $wxNoise) {

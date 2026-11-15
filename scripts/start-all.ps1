@@ -1,4 +1,4 @@
-﻿# 一键启动所有服务（后端 + 前端 + 语音 + 微信监听 + 抖音账号）
+﻿# 一键启动所有服务（后端 + 前端 + 语音 + 抖音账号 + 小红书账号）
 # 用法： .\start-all.ps1
 # 停止： .\start-all.ps1 -Stop
 param(
@@ -13,7 +13,8 @@ $NODE = 'C:\Users\11\.dsh\dsh-runtimes\dsh-primary-runtime\dependencies\node\bin
 $EDGE = 'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe'
 $BACKEND = 'E:\ai\gin-vue-admin\server\bin\gva.exe'
 $BACKEND_DIR = 'E:\ai\gin-vue-admin\server'
-$WATCHER = 'E:\ai\scripts\wx_watch.py'
+# 本机客户端监听脚本路径由 local-start.ps1 提供（不在开源仓库内）
+$WATCHER = ''
 $API_BASE = 'http://127.0.0.1:8888'
 $LOGDIR = 'E:\ai\data\logs'
 $FRONT_DIR = 'E:\ai\soybean-admin'
@@ -24,7 +25,7 @@ function Stop-All {
   Write-Host '停止服务…'
 
   Get-CimInstance Win32_Process -Filter "Name='python.exe'" |
-    Where-Object { $_.CommandLine -like '*wx_watch*' } |
+    Where-Object { $_.CommandLine -like '*wx_watch*' -or $_.CommandLine -like '*client_watch*' } |
     ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }
 
   Get-CimInstance Win32_Process -Filter "Name='node.exe'" |
@@ -115,17 +116,15 @@ function Start-Audio {
 }
 
 function Start-Watcher {
-  $running = Get-CimInstance Win32_Process -Filter "Name='python.exe'" |
-    Where-Object { $_.CommandLine -like '*wx_watch*' }
+  # 本机客户端监听不在开源仓库内：如果同目录有 local-start.ps1 就执行它
+  $localStart = Join-Path $PSScriptRoot 'local-start.ps1'
 
-  if ($running) {
-    Write-Host '微信监听已在运行'
+  if (Test-Path $localStart) {
+    & $localStart
     return
   }
 
-  Start-Process -FilePath $PY -ArgumentList $WATCHER, '--interval', '1.5', '--reply', '--send' -WindowStyle Hidden -WorkingDirectory 'E:\ai\scripts' -RedirectStandardOutput "$LOGDIR\wxwatch.out.log" -RedirectStandardError "$LOGDIR\wxwatch.err.log"
-
-  Write-Host '微信监听已启动（自动回复 + 转人工 + 客户打分）'
+  Write-Host '本机客户端监听：未配置（需要 local-start.ps1）'
 }
 
 function Get-ApiHeaders {
