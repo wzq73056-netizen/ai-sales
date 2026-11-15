@@ -40,6 +40,93 @@
 | 大模型 | deepseek-chat 等任意 OpenAI 兼容接口 |
 | 语音 | SenseVoice（sherpa-onnx）本地转写，可选 |
 
+## 采集模块怎么跑
+
+`scraper/` 里的脚本不直接调 API，靠 Playwright 连一个**已经登录好**的浏览器。所以顺序是：
+
+### 1. 用独立 profile 启动 Edge（带调试端口）
+
+```powershell
+# 抖音（端口 9333）
+msedge.exe --remote-debugging-port=9333 `
+  --user-data-dir=D:\ai\browser\profile-douyin
+
+# 小红书（端口 9334）
+msedge.exe --remote-debugging-port=9334 `
+  --user-data-dir=D:\ai\browser\profile-xiaohongshu
+```
+
+`--user-data-dir` 一定要分开：同一个目录只能起一个实例，而且两个账号的
+Cookie 混在一起容易互相影响。
+
+### 2. 在打开的窗口里手动登录一次
+
+抖音扫码、小红书扫码，登录态会存进各自的 profile 目录。
+之后脚本复用的是这份登录态，不用每次登录。
+
+### 3. 装依赖
+
+```powershell
+cd scraper
+npm init -y
+npm install playwright-core
+```
+
+只需要 `playwright-core`，不需要下载浏览器（用的是你本机的 Edge）。
+
+### 4. 跑脚本
+
+```powershell
+# 抖音：按关键词搜视频
+node dy_collect.mjs 关键词
+
+# 抖音：抓某个视频的评论
+node dy_comments.mjs <视频id> --limit 20
+
+# 采完推到后台
+node dy_push.mjs
+
+# 小红书：搜笔记
+node xhs_collect.mjs 关键词
+
+# 小红书：抓评论
+node xhs_comments.mjs <笔记id> --limit 20
+
+# 小红书：推后台
+node xhs_push.mjs
+```
+
+每个脚本头部都有一段注释说明参数，`node xxx.mjs --help` 不一定有，
+直接看文件开头。
+
+### 5. 私信监听（可选）
+
+```powershell
+node dy_dm_watch.mjs --once           # 跑一轮看看会做什么
+node dy_dm_watch.mjs --interval 300 --send   # 常驻并真实发送
+```
+
+私信只回白名单里的人，名单在后台「系统管理 → 客户」里维护。
+名单外的一律不动。
+
+### 端口和路径都能改
+
+```
+CDP 端口   环境变量 CDP / CDP_XHS
+           默认 抖音 9333、小红书 9334
+浏览器     连不上会报错，先确认端口通了：
+           Test-NetConnection 127.0.0.1 -Port 9333
+```
+
+### 常见问题
+
+| 现象 | 原因 | 处理 |
+|---|---|---|
+| `connect ECONNREFUSED 127.0.0.1:9333` | 浏览器没起或端口不对 | 按第 1 步重起，确认端口 |
+| 页面打开是登录页 | profile 里没有登录态 | 在第 2 步的窗口里手动登录 |
+| 抓不到数据 | 平台改版，选择器失效 | 需要改脚本里的选择器 |
+| 提示配额已满 | 每日上限到了 | 见 `humanize.mjs` 里的 LIMITS |
+
 ## 目录结构
 
 ```
